@@ -3,7 +3,7 @@
 This example reproduces one curve of figure 7.12 from the Conceptual Design Report (CDR) of the
 hadronic Future Circular Collider (FCC-hh) <http://cds.cern.ch/record/2651300> .
 
-![](docs/Trk_dpTOverpTFinalCorrWithRiemanFit.png "CDR figure 7.12" | width=200)
+ <img src="docs/Trk_dpTOverpTFinalCorrWithRiemanFit.png" alt="CDR figure 7.12" width="60%">
 
 Fig. 7.12 compares the momentum resolution of the proposed track detector model for two magnet
 options. The resolution is calculated using different approximations.
@@ -15,13 +15,13 @@ machine with at least 4GB of RAM. The output root file contains information on t
 the corresponding tracker hits in the FCC event data model. We can inspect the number of hits per
 track with the script `'numHitsPerTrack.C("muons_for_seeding_discrete_pt.root")'`, for example.
 
-![](docs/numHitsPerTrack.png | width=100)
+ <img src="docs/numHitsPerTrack.png" alt="numHitsPerTrack" width="60%">
 
 The final step is fitting the tracker hits with a Riemann fit, implemented in the `tricktrack`
 seeding library, which is again integrated in the FCC Framework. This yields the reconstructed
 tracks, which can be plotted with the python script `plot_single_particle_resolutions.py`:
 
-![](docs/SinglePartRes_single_particle_resolutions_nevents05000_pt_res_div_binned.png | width=200)
+ <img src="docs/SinglePartRes_single_particle_resolutions_nevents05000_pt_res_div_binned.png" alt="finalResolutions" width="60%">
 
 The pink curve corresponds to the one in figure 7.12.
 While the Riemann Fit cannot correctly estimate the resolutions for low momentum tracks, whose

@@ -1,0 +1,19 @@
+inputs:
+  files:
+    - config/geantSim_Tracker.py 
+    - config/single_particle_trackFits
+    - script/numHitsPerTrack.C
+    - script/plot_single_particle_resolutions.py
+workflow:
+  type: serial
+  specification:
+    steps:
+      - environment: 'lhcbdev/slc6-build'
+        commands:
+        - fccrun.py  config/geantSim_TrackerPerformance.py -N 5000 -s 0123456 --outName muons_for_seeding_discrete_pt.root --singlePart --particle 13 --etaMin 0 --etaMax 6 --discretePt --pt 1000 2000 5000 10000 100000 1000000 10000000 
+        - root 'numHitsPerTrack.C("muons_for_seeding_discrete_pt.root")'
+        - fccrun.py config/single_particle_trackFits.py --inputfile muons_for_seeding_discrete_pt.root --outputfile single_particle_resolutions.root
+        - python plot_single_particle_resolutions.py
+
+
+

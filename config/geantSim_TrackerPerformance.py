@@ -95,11 +95,11 @@ from GaudiKernel import SystemOfUnits as units
 path_to_detector = simargs.pathToDetector
 
 if simargs.tripletTracker:
-  detectors_to_use=[path_to_detector+'Detector/DetFCChhTrackerTkLayout/compact/FCChh_DectEmptyTracker.xml',
+  detectors_to_use=[path_to_detector+'Detector/DetFCChhBaseline1/compact/FCChh_DectEmptyMaster.xml',
                     path_to_detector+'Detector/DetFCChhTrackerTkLayout/triplet/FCCtriplet_1barrel30mm.xml',
                     ]
 else:
-  detectors_to_use=[path_to_detector+'Detector/DetFCChhTrackerTkLayout/compact/FCChh_DectEmptyTracker.xml',
+  detectors_to_use=[path_to_detector+'Detector/DetFCChhBaseline1/compact/FCChh_DectEmptyMaster.xml',
                     path_to_detector+'Detector/DetFCChhTrackerTkLayout/compact/Tracker.xml',
                     ]
 
@@ -128,26 +128,26 @@ else:
     field = SimG4ConstantMagneticFieldTool("bField", FieldOn=False)
 
 from Configurables import SimG4Svc
-if simargs.geantinos:
-  from Configurables import SimG4UserLimitRegion, SimG4UserLimitPhysicsList, SimG4GeantinoPhysicsList
-  regiontool = SimG4UserLimitRegion("limits", volumeNames=["world"],
-                                                     maxStep = 0.1*units.mm)
-  
-  physicslist = SimG4UserLimitPhysicsList("Physics", fullphysics="SimG4GeantinoPhysicsList")
-  regions = [regiontool]
-  #physicslist = SimG4GeantinoPhysicsList()
-  #regions = []
-else:
-  from Configurables import SimG4UserLimitRegion, SimG4UserLimitPhysicsList
-  regiontool = SimG4UserLimitRegion("limits", volumeNames=["world"],
-                                                     maxStep = 0.1*units.mm)
-  physicslist = SimG4UserLimitPhysicsList("Physics", fullphysics="SimG4FtfpBert")
-  regions = [regiontool]
-  
+#if simargs.geantinos:
+#  from Configurables import SimG4UserLimitRegion, SimG4UserLimitPhysicsList, SimG4GeantinoPhysicsList
+#  regiontool = SimG4UserLimitRegion("limits", volumeNames=["world"],
+#                                                     maxStep = 0.1*units.mm)
+#  
+#  physicslist = SimG4UserLimitPhysicsList("Physics", fullphysics="SimG4GeantinoPhysicsList")
+#  regions = [regiontool]
+#  #physicslist = SimG4GeantinoPhysicsList()
+#  #regions = []
+#else:
+#  from Configurables import SimG4UserLimitRegion, SimG4UserLimitPhysicsList
+#  regiontool = SimG4UserLimitRegion("limits", volumeNames=["world"],
+#                                                     maxStep = 0.1*units.mm)
+#  physicslist = SimG4UserLimitPhysicsList("Physics", fullphysics="SimG4FtfpBert")
+#  regions = [regiontool]
+#  
 
 
 
-geantservice = SimG4Svc("SimG4Svc", detector='SimG4DD4hepDetector', physicslist=physicslist, regions=regions, actions=actions, magneticField=field)
+geantservice = SimG4Svc("SimG4Svc", detector='SimG4DD4hepDetector', physicslist="SimG4FtfpBert", regions=[], actions=actions, magneticField=field)
 # range cut
 geantservice.g4PostInitCommands += ["/run/setCut 0.1 mm"]
 if simargs.trajectories:

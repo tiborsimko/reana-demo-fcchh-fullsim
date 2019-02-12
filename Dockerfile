@@ -13,6 +13,8 @@ RUN wget -q  https://fcc-pileup.web.cern.ch/fcc-pileup/sw/latest/x86_64-ubuntu18
     apt update; \
     DEBIAN_FRONTEND=noninteractive apt upgrade -y; \
     apt install -y hep-fccsw;
+# download data files needed to run geant4
+RUN apt install -y hep-geant4data;
 ## necessary shell environment (usually sourced from /etc/profile)
 ENV G4NEUTRONHPDATA=/usr/local/share/Geant4/data/G4NDL4.5 \
     G4LEDATA=/usr/local/share/Geant4/data/G4EMLOW7.7 \
@@ -36,7 +38,6 @@ ENV G4NEUTRONHPDATA=/usr/local/share/Geant4/data/G4NDL4.5 \
     PYTHONPATH=$PYTHONPATH:/usr/local/lib:/usr/local/python \
     PATH=$PATH:/usr/local/scripts/:/usr/local/bin \
     CPLUS_INCLUDE_DIR=$CPLUS_INCLUDE_DIR:/usr/local/include \
-    GAUDI_LIBRARY_PATH=/usr/local/lib 
+    GAUDI_LIBRARY_PATH=/usr/local/lib \
+    LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 
-# download data files needed to run geant4
-RUN apt install -y hep-geant4data;

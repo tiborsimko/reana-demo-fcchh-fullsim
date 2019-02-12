@@ -22,8 +22,6 @@ podioinput = PodioInput("PodioReader",
                                       "SimVertices", 
                                       "TrackerHits", 
                                       "TrackerPositionedHits", 
-                                      "trajectory", 
-                                      "trajectoryPoints",
                                       ], 
                           OutputLevel=DEBUG,
                           )

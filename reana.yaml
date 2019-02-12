@@ -5,6 +5,13 @@ inputs:
     - config/single_particle_trackFits.py
     - script/numHitsPerTrack.C
     - script/plot_single_particle_resolutions.py
+  parameters:
+    events: 5000
+    seed: 0123456
+    particle: 13
+    etamin: 0
+    etamax: 6
+    pt: 1000 2000 5000 10000 100000 1000000 10000000
 workflow:
   type: serial
   specification:
@@ -12,11 +19,16 @@ workflow:
       - environment: 'gitlab-registry.cern.ch/vavolkl/fcc-ubuntu:latest'
         commands:
         - fccrun.py config/geantSim_TrackerPerformance.py
-            -N 5000 -s 0123456 --outName muons_for_seeding_discrete_pt.root
-            --singlePart --particle 13 --etaMin 0 --etaMax 6 --discretePt
-            --pt 1000 2000 5000 10000 100000 1000000 10000000
+            -N $events -s $seed --outName muons_for_seeding_discrete_pt.root
+            --singlePart --particle $particle --etaMin $etamin --etaMax $etamax
+            --discretePt --pt $pt
             --pathToDetector /usr/local/
           | tee simulation.log 2> simulation.err
-        - root -b 'script/numHitsPerTrack.C("muons_for_seeding_discrete_pt.root")' | tee plot-tracker-hits.log 2> plot-tracker-hits.err
-        - fccrun.py config/single_particle_trackFits.py --inputfile muons_for_seeding_discrete_pt.root --outputfile single_particle_resolutions.root
+        - root -b 'script/numHitsPerTrack.C("muons_for_seeding_discrete_pt.root")'
+          | tee plot-tracker-hits.log 2> plot-tracker-hits.err
+        - fccrun.py config/single_particle_trackFits.py
+            --inputfile muons_for_seeding_discrete_pt.root
+            --outputfile single_particle_resolutions.root
+          | tee fit.log 2> fit.err
         - python script/plot_single_particle_resolutions.py single_particle_resolutions.root
+          | tee plot-reconstructed-tracks.log 2> plot-reconstructed-tracks.err

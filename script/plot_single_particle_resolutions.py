@@ -3,11 +3,14 @@ import scipy.stats
 import sys
 import os
 import matplotlib
+matplotlib.use("agg")
 import ROOT
 import argparse
 from EventStore import EventStore
 import numpy as np
 import matplotlib.pyplot as plt
+
+
 
 
 # command line arguments
@@ -185,7 +188,7 @@ plt.xlabel(r"$\eta$")
 plt.title("rpull of $p_t$")
 plt.xlim(-2,2)
 
-plt.figure("pt_res_div_binned")
+finalfig = plt.figure("pt_res_div_binned")
 plt.gca().set_yscale("log", nonposy='clip')
 plt.xlabel(r"$\eta$", horizontalalignment='right', x=1.0)
 plt.ylabel(r"$\frac {\delta p_T} {p_T} [\%] $", horizontalalignment='right', y=.95, rotation="horizontal", labelpad=-5)
@@ -195,7 +198,7 @@ plt.legend(loc="best", title="Pt [GeV]")
 f = "SinglePartRes_" + args.filename.replace(".root", "") + "_nevents%05i" % args.nevents
 
 figs = [plt.figure(n) for n in plt.get_fignums()]
-for fig in figs:
+for fig in [finalfig]: # use figs to save all plots
   plot_outfilename = os.path.join(args.plotprefix, f + "_" + fig._label + ".png")
   print "Writing plot ", plot_outfilename, "..."
   fig.savefig(plot_outfilename)

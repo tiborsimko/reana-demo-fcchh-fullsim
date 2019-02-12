@@ -35,9 +35,10 @@ ENV G4NEUTRONHPDATA=/usr/local/share/Geant4/data/G4NDL4.5 \
     DD4hep_ROOT=/usr/local/ \
     DD4HEP_LIBRARY_PATH=$/usr/local/lib/ \
     ROOT_INCLUDE_PATH=$ROOT_INCLUDE_PATH:/usr/local/include:/usr/local/include/datamodel \
-    PYTHONPATH=$PYTHONPATH:/usr/local/lib:/usr/local/python \
+    PYTHONPATH=$PYTHONPATH:/usr/local/lib:/usr/local/python:/usr/local/lib/root:/opt/madgraph \
     PATH=$PATH:/usr/local/scripts/:/usr/local/bin \
     CPLUS_INCLUDE_DIR=$CPLUS_INCLUDE_DIR:/usr/local/include \
     GAUDI_LIBRARY_PATH=/usr/local/lib \
     LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
+RUN DEBIAN_FRONTEND=noninteractive apt install -y python-scipy python-matplotlib;
 

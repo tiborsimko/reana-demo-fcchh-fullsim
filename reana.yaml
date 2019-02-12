@@ -9,17 +9,14 @@ workflow:
   type: serial
   specification:
     steps:
-      - environment: 'gitlab-registry.cern.ch/vavolkl/fcc-ubuntu'
+      - environment: 'gitlab-registry.cern.ch/vavolkl/fcc-ubuntu:latest'
         commands:
-        - source /etc/profile &&
-          fccrun.py config/geantSim_TrackerPerformance.py
+        - fccrun.py config/geantSim_TrackerPerformance.py
             -N 5000 -s 0123456 --outName muons_for_seeding_discrete_pt.root
             --singlePart --particle 13 --etaMin 0 --etaMax 6 --discretePt
             --pt 1000 2000 5000 10000 100000 1000000 10000000
             --pathToDetector /usr/local/
           | tee simulation.log 2> simulation.err
-        - source /etc/profile &&
-          root -b 'script/numHitsPerTrack.C("muons_for_seeding_discrete_pt.root")'
-          | tee plot-tracker-hits.log 2> plot-tracker-hits.err
-        # - source /etc/profile && fccrun.py config/single_particle_trackFits.py --inputfile muons_for_seeding_discrete_pt.root --outputfile single_particle_resolutions.root
+        - root -b 'script/numHitsPerTrack.C("muons_for_seeding_discrete_pt.root")' | tee plot-tracker-hits.log 2> plot-tracker-hits.err
+        - fccrun.py config/single_particle_trackFits.py --inputfile muons_for_seeding_discrete_pt.root --outputfile single_particle_resolutions.root
         # - source /etc/profile && python script/plot_single_particle_resolutions.py

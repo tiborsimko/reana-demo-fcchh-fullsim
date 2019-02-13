@@ -19,4 +19,4 @@ workflow:
           | tee simulation.log 2> simulation.err
         - root -b 'script/numHitsPerTrack.C("muons_for_seeding_discrete_pt.root")' | tee plot-tracker-hits.log 2> plot-tracker-hits.err
         - fccrun.py config/single_particle_trackFits.py --inputfile muons_for_seeding_discrete_pt.root --outputfile single_particle_resolutions.root
-        - python script/plot_single_particle_resolutions.py
+        - python script/plot_single_particle_resolutions.py single_particle_resolutions.root

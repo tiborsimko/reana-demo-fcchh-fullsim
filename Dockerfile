@@ -1,9 +1,11 @@
 FROM ubuntu:18.04
 # tools needed to setup repository
+# hadolint ignore=DL3027
 RUN apt update; \
     DEBIAN_FRONTEND=noninteractive apt upgrade -y; \
     apt install -y wget gnupg;
 # setup of the fcc apt repository
+# hadolint ignore=DL3027
 RUN wget -q  https://fcc-pileup.web.cern.ch/fcc-pileup/sw/latest/x86_64-ubuntu1804-gcc8-opt/keyFile; \ 
     apt-key add keyFile; \ 
     rm keyFile; \
@@ -14,6 +16,7 @@ RUN wget -q  https://fcc-pileup.web.cern.ch/fcc-pileup/sw/latest/x86_64-ubuntu18
     DEBIAN_FRONTEND=noninteractive apt upgrade -y; \
     apt install -y hep-fccsw;
 # download data files needed to run geant4
+# hadolint ignore=DL3027
 RUN apt install -y hep-geant4data;
 ## necessary shell environment (usually sourced from /etc/profile)
 ENV G4NEUTRONHPDATA=/usr/local/share/Geant4/data/G4NDL4.5 \
@@ -40,5 +43,6 @@ ENV G4NEUTRONHPDATA=/usr/local/share/Geant4/data/G4NDL4.5 \
     CPLUS_INCLUDE_DIR=$CPLUS_INCLUDE_DIR:/usr/local/include \
     GAUDI_LIBRARY_PATH=/usr/local/lib \
     LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
+# hadolint ignore=DL3027
 RUN DEBIAN_FRONTEND=noninteractive apt install -y python-scipy python-matplotlib;
 

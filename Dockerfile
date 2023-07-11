@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM docker.io/library/ubuntu:18.04
 # tools needed to setup repository
 # hadolint ignore=DL3027
 RUN apt update; \
@@ -6,8 +6,8 @@ RUN apt update; \
     apt install -y wget gnupg;
 # setup of the fcc apt repository
 # hadolint ignore=DL3027
-RUN wget -q  https://fcc-pileup.web.cern.ch/fcc-pileup/sw/latest/x86_64-ubuntu1804-gcc8-opt/keyFile; \ 
-    apt-key add keyFile; \ 
+RUN wget -q  https://fcc-pileup.web.cern.ch/fcc-pileup/sw/latest/x86_64-ubuntu1804-gcc8-opt/keyFile; \
+    apt-key add keyFile; \
     rm keyFile; \
     wget https://fcc-pileup.web.cern.ch/fcc-pileup/sw/latest/x86_64-ubuntu1804-gcc8-opt/hep-fccrepoconfig_0.0-3.deb; \
     dpkg -i hep-fccrepoconfig_0.0-3.deb; \
